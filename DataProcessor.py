@@ -78,7 +78,6 @@ class DataProcessor:
 
         def updateCharts(self):
             meanTime = Utils.meanTime(self.times)
-            self.machineData =  [self.machineData[0]]
             numUsers_data = np.load('timeSeries_numUsers.npz')
             loadAverage_data = np.load('timeSeries_loadAverage.npz')
 
@@ -144,5 +143,6 @@ class DataProcessor:
             plt.title('CS Student Server Load Average')
             plt.savefig('load_vs_time.png', dpi=300, bbox_inches='tight')
             plt.close()
-
+            
             HTMLGenerator.generateDynamicBody(self.machineData,meanTime)
+            self.machineData =  [self.machineData[0]]

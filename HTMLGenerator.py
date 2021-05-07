@@ -31,7 +31,8 @@ class HTMLGenerator:
     @staticmethod
     def generateDynamicBody(machineData, updateTime):
         return f"""
-                        <footer>
+                  {tabulate(machineData, headers='firstrow', tablefmt='html')}
+                  <footer>
 			    <p>Author: Zameer Bharwani</p>
 		        </footer>
 	            </body>
