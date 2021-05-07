@@ -46,7 +46,9 @@ class DataProcessor:
 
         def process(self, machine, data):
                 def getNumUsers():
-                        return float(data[0].split(',')[2].split(' ')[2])
+                    top_users = data[0].split(',')[2].split(' ')
+                    print(top_users)
+                    return float(top_users[len(top_users)-2])
 
                 def getLoadAverage():
                         loadAverage = ['0']*3

@@ -30,10 +30,6 @@ class HTMLGenerator:
                 """
     @staticmethod
     def generateDynamicBody(machineData, updateTime):
-        pass
-
-    @staticmethod
-    def generateClosingBody():
         return f"""
                         <footer>
 			    <p>Author: Zameer Bharwani</p>
@@ -41,4 +37,3 @@ class HTMLGenerator:
 	            </body>
                 </html>
               """
-            

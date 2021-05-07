@@ -8,7 +8,7 @@ machines = [
 	    ]
 
 port = 22
-refreshRate = 10 # seconds (5 minutes)
+refreshRate = 300 # seconds (5 minutes)
 
 
 ## Graphing ##

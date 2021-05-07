@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/users/zfbharwa/.pyenv/shims/python3
 
 from DataProcessor import *
 from HTMLGenerator import *
@@ -27,15 +27,15 @@ class Manager:
                 command = f"top -b -n 1 > top_{i}.txt && cat top_{i}.txt"
                 ssh = paramiko.SSHClient()
                 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-                try:
-                    ssh.connect(machine, port, self.username, self.password)
-                    stdin, stdout, stderr = ssh.exec_command(command)
-                    machineActivity = stdout.readlines()
-                    ssh.close()
-                    self.dataProcessor.process(machine, machineActivity[0:5])
-                except Exception as e:
-                    print(f'Failed to ssh into {machine} with error:\n{e}')
-                    sys.exit()
+ #               try:
+                ssh.connect(machine, port, self.username, self.password)
+                stdin, stdout, stderr = ssh.exec_command(command)
+                machineActivity = stdout.readlines()
+                ssh.close()
+                self.dataProcessor.process(machine, machineActivity[0:5])
+  #              except Exception as e:
+   #                 print(f'Failed to ssh into {machine} with error:\n{e}')
+    #                sys.exit()
         """
         API to get the program running
         """
