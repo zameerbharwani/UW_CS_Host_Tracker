@@ -1,4 +1,4 @@
-from constants import machines, alpha
+from constants import machines, alpha, markersize, markers
 from Utils import *
 from HTMLGenerator import *
 import numpy as np
@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 class DataProcessor:
         def __init__(self):
-            self.machineData =  [ ['Host', '# of Users', 'Load Average (1/5/15 minutes)'] ]
+            self.machineData =  [ ['Host', '# of Users', 'Load Average'] ]
             self.times = [ ]
             self.htmlGenerator = HTMLGenerator()
             # sourced from: https://uwaterloo.ca/computer-science-computing-facility/teaching-hosts
@@ -21,7 +21,6 @@ class DataProcessor:
                                     [machines[3], 'AMD EPYC 7532', 2, 32, 2, 256, 'Dell Inc.', 'PowerEdge R7525']
                                     
                             ]
-            HTMLGenerator.generateStaticBody(self.machineSpecs)
             self.graphData = {
                     machines[0]: {'numUsers':0, 'loadAverage':0},
                     machines[1]: {'numUsers':0, 'loadAverage':0},
@@ -47,7 +46,6 @@ class DataProcessor:
         def process(self, machine, data):
                 def getNumUsers():
                     top_users = data[0].split(',')[2].split(' ')
-                    print(top_users)
                     return float(top_users[len(top_users)-2])
 
                 def getLoadAverage():
@@ -114,10 +112,10 @@ class DataProcessor:
             np.savez('timeSeries_loadAverage.npz', time=time, machine0_loadAverage=machine0_loadAverage, machine1_loadAverage=machine1_loadAverage, 
                         machine2_loadAverage=machine2_loadAverage, machine3_loadAverage=machine3_loadAverage)
 
-            m0, = plt.plot(time, machine0_users, label='1804-002', linestyle=':', marker='o', alpha=alpha)
-            m1, = plt.plot(time, machine1_users, label='1804-010', linestyle='-.', marker='o',alpha=alpha)
-            m2, = plt.plot(time, machine2_users, label='2004-002', linestyle='--', marker='o',alpha=alpha)
-            m3, = plt.plot(time, machine3_users, label='2004-004', marker='o')
+            m0, = plt.plot(time, machine0_users, label='1804-002', linestyle=':', marker=markers[0], markersize=markersize, alpha=alpha)
+            m1, = plt.plot(time, machine1_users, label='1804-010', linestyle='-.', marker=markers[1], markersize=markersize, alpha=alpha)
+            m2, = plt.plot(time, machine2_users, label='2004-002', linestyle='--', marker=markers[2], markersize=markersize, alpha=alpha)
+            m3, = plt.plot(time, machine3_users, label='2004-004', marker=markers[3], markersize=markersize)
             plt.legend(handles=[m0, m1, m2, m3], bbox_to_anchor=(1.05, 1), loc='upper left', fontsize='xx-small')
             ax = plt.gca()
             ax.axes.xaxis.set_ticks([])
@@ -129,10 +127,13 @@ class DataProcessor:
             plt.savefig('users_vs_time.png', dpi=300, bbox_inches='tight')
             plt.close()
 
-            m0, = plt.plot(time, machine0_loadAverage, label='1804-002', linestyle=':', marker='o', alpha=alpha)
-            m1, = plt.plot(time, machine1_loadAverage, label='1804-010', linestyle='-.', marker='o', alpha=alpha)
-            m2, = plt.plot(time, machine2_loadAverage, label='2004-002', linestyle='--', marker='o', alpha=alpha)
-            m3, = plt.plot(time, machine3_loadAverage, label='2004-004', marker='o',alpha=alpha)
+            m0, = plt.plot(time, machine0_loadAverage, label='1804-002', linestyle=':', marker=markers[0],
+                    markersize=markersize, alpha=alpha)
+            m1, = plt.plot(time, machine1_loadAverage, label='1804-010', linestyle='-.', marker=markers[1],
+                    markersize=markersize, alpha=alpha)
+            m2, = plt.plot(time, machine2_loadAverage, label='2004-002', linestyle='--', marker=markers[2],
+                    markersize=markersize, alpha=alpha)
+            m3, = plt.plot(time, machine3_loadAverage, label='2004-004', marker=markers[3], markersize=markersize, alpha=alpha)
             plt.legend(handles=[m0, m1, m2, m3], bbox_to_anchor=(1.05, 1), loc='upper left', fontsize='xx-small')
             ax = plt.gca()
             ax.axes.xaxis.set_ticks([])
@@ -144,5 +145,5 @@ class DataProcessor:
             plt.savefig('load_vs_time.png', dpi=300, bbox_inches='tight')
             plt.close()
             
-            HTMLGenerator.generateDynamicBody(self.machineData,meanTime)
+            HTMLGenerator.generatePage(self.machineSpecs,self.machineData,meanTime)
             self.machineData =  [self.machineData[0]]

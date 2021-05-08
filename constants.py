@@ -10,6 +10,7 @@ machines = [
 port = 22
 refreshRate = 300 # seconds (5 minutes)
 
-
 ## Graphing ##
 alpha = 0.5
+markersize = 2
+markers = ['.','*','o','3']
