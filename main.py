@@ -36,7 +36,7 @@ class Manager:
                     print(f'Failed to ssh into {machine} with error:\n{e}')
                     sys.exit()
         """
-        API to get the program running
+        Starting point to get the program running
         """
         def run(self):
                 while True:
